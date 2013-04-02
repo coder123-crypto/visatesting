@@ -29,6 +29,8 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
             this->surname = d.surname;
             this->groupId = d.groupId;
         }
+        else
+            return;
     }
 
     this->questions->loadQuestions();
@@ -56,6 +58,8 @@ void QuestionWidget::goToNextQuestion()
 // Построить интерфейс
 void QuestionWidget::createGUI()
 {
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     this->resize(QApplication::desktop()->size() / 2);
 
     this->layout = new QHBoxLayout(this);
@@ -93,6 +97,9 @@ void QuestionWidget::createGUI()
 
 void QuestionWidget::rightButtonClick()
 {
+    if (this->questions->count() == 0)
+        return;
+
     switch (this->curMode) {
     case QuestionWidget::FreeTimeMode:
         if (this->curQuestion.isRight == true)
@@ -114,6 +121,9 @@ void QuestionWidget::rightButtonClick()
 
 void QuestionWidget::notRightButtonClick()
 {
+    if (this->questions->count() == 0)
+        return;
+
     switch (this->curMode) {
     case QuestionWidget::FreeTimeMode:
         if (this->curQuestion.isRight == true) {
@@ -179,9 +189,8 @@ void QuestionWidget::endQuestions()
     this->buttonNotCorrect->setEnabled(false);
 
     if (this->curMode == TestingMode) {
-        QSettings s("MIREA", "VisaTester");
+        QSettings s("MIREA", "VisaTestViewer");
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "ytrewq");
-        db.setDatabaseName("VISATESTING");
         db.setHostName(s.value("HostName").toString());
         db.setUserName(s.value("UserName").toString());
         db.setPort(s.value("Port").toInt());

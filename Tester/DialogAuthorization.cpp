@@ -2,45 +2,52 @@
 
 DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
 {
-    this->db = QSqlDatabase::addDatabase("QODBC", "qwerty");
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->db = QSqlDatabase::addDatabase("QMYSQL", "qwerty");
+    QSettings s("MIREA", "VisaTestViewer");
+    this->db.setHostName(s.value("HostName").toString());
+    this->db.setUserName(s.value("UserName").toString());
+    this->db.setPort(s.value("Port").toInt());
+    this->db.setPassword(s.value("Password").toString());
 
-    this->db.setDatabaseName("VISATESTING");
-    this->db.open();
+    if (this->db.open() == true) {
+        QSqlQuery query(this->db);
+        query.exec("USE VISATESTING;");
+        this->model = new QSqlTableModel(this, this->db);
+        this->model->setTable("Groups");
+        this->model->select();
 
-    QSqlQuery query(this->db);
-    query.exec("USE VISATESTING;");
-    this->model = new QSqlTableModel(this, this->db);
-    this->model->setTable("Groups");
-    this->model->select();
+        this->layout = new QVBoxLayout(this);
+        this->groupBoxGroups = new QGroupBox(tr("Группа:"), this);
+        this->groupBoxGroups->setLayout(new QVBoxLayout(this->groupBoxGroups));
+        this->comboGroup = new QComboBox(this);
+        this->comboGroup->setModel(this->model);
+        this->comboGroup->setModelColumn(1);
+        this->groupBoxGroups->layout()->addWidget(this->comboGroup);
 
-    this->layout = new QVBoxLayout(this);
-    this->groupBoxGroups = new QGroupBox(tr("Группа:"), this);
-    this->groupBoxGroups->setLayout(new QVBoxLayout(this->groupBoxGroups));
-    this->comboGroup = new QComboBox(this);
-    this->comboGroup->setModel(this->model);
-    this->comboGroup->setModelColumn(1);
-    this->groupBoxGroups->layout()->addWidget(this->comboGroup);
+        this->groupBoxName = new QGroupBox(tr("Имя:"), this);
+        this->groupBoxName->setLayout(new QVBoxLayout(this->groupBoxName));
+        this->lineEditName = new QLineEdit(this);
+        this->groupBoxName->layout()->addWidget(this->lineEditName);
 
-    this->groupBoxName = new QGroupBox(tr("Имя:"), this);
-    this->groupBoxName->setLayout(new QVBoxLayout(this->groupBoxName));
-    this->lineEditName = new QLineEdit(this);
-    this->groupBoxName->layout()->addWidget(this->lineEditName);
+        this->groupBoxSurname = new QGroupBox(tr("Фамилия:"), this);
+        this->groupBoxSurname->setLayout(new QVBoxLayout(this->groupBoxSurname));
+        this->lineEditSurname = new QLineEdit(this);
+        this->groupBoxSurname->layout()->addWidget(this->lineEditSurname);
 
-    this->groupBoxSurname = new QGroupBox(tr("Фамилия:"), this);
-    this->groupBoxSurname->setLayout(new QVBoxLayout(this->groupBoxSurname));
-    this->lineEditSurname = new QLineEdit(this);
-    this->groupBoxSurname->layout()->addWidget(this->lineEditSurname);
+        this->buttons = new QDialogButtonBox(this);
+        this->buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
-    this->buttons = new QDialogButtonBox(this);
-    this->buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        this->layout->addWidget(this->groupBoxGroups);
+        this->layout->addWidget(this->groupBoxName);
+        this->layout->addWidget(this->groupBoxSurname);
+        this->layout->addWidget(this->buttons);
 
-    this->layout->addWidget(this->groupBoxGroups);
-    this->layout->addWidget(this->groupBoxName);
-    this->layout->addWidget(this->groupBoxSurname);
-    this->layout->addWidget(this->buttons);
-
-    connect(this->buttons, SIGNAL(accepted()), this, SLOT(ok()));
-    connect(this->buttons, SIGNAL(rejected()), this, SLOT(cancel()));
+        connect(this->buttons, SIGNAL(accepted()), this, SLOT(ok()));
+        connect(this->buttons, SIGNAL(rejected()), this, SLOT(cancel()));
+    }
+    else
+        QMessageBox::warning(this, tr("Ошибка"), this->db.lastError().text());
 }
 
 DialogAuthorization::~DialogAuthorization()
@@ -72,18 +79,6 @@ void DialogAuthorization::ok()
         return;
     }
 
-//    const int row = m.rowCount();
-//    m.insertRow(row);
-//    QSqlRecord record = m.record(row);
-//    record.setValue("GroupId", id);
-//    record.setValue("FirstName", this->lineEditName->text());
-//    record.setValue("LastName", this->lineEditSurname->text());
-//    m.setRecord(row, record);
-//    m.submitAll();
-
-//    query.exec(QString("SELECT * FROM Students WHERE FirstName = '%1' AND LastName = '%2' AND GroupId = %3;").arg(this->lineEditName->text()).arg(this->lineEditSurname->text()).arg(id));
-//    query.next();
-//    this->studentId = query.value(0).toInt();
     this->name = this->lineEditName->text();
     this->surname = this->lineEditSurname->text();
     this->groupId = id;

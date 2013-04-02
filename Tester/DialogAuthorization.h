@@ -16,6 +16,7 @@
 #include <QSqlRecord>
 #include <QDateTime>
 #include <QSqlError>
+#include <QSettings>
 
 class DialogAuthorization : public QDialog
 {

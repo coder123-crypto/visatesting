@@ -2,6 +2,7 @@
 
 DialogResults::DialogResults(QWidget *parent, QByteArray results) : QDialog(parent)
 {
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->layout = new QVBoxLayout(this);
     this->edit = new QTextEdit(this);
     this->edit->setReadOnly(true);

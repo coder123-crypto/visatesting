@@ -42,6 +42,7 @@ bool Questions::loadQuestions()
     }
     this->_err = query->lastError().text();
     delete query;
+
     return ok;
 }
 
