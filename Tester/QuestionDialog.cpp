@@ -79,14 +79,16 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
             this->surname = d.surname;
             this->groupId = d.groupId;
         }
-        else
-            return;
     }
 
     this->questions->loadQuestions();
-    this->results.clear();
-    this->beginOfTesting = QDateTime::currentDateTime();
-    this->setNextQuestion();
+    if (this->questions->count() > 0) {
+        this->results.clear();
+        this->beginOfTesting = QDateTime::currentDateTime();
+        this->setNextQuestion();
+    }
+    else
+        QMessageBox::warning(this, "", tr("Вопросы не были загружены"));
 }
 
 QuestionWidget::~QuestionWidget()
@@ -156,9 +158,6 @@ void QuestionWidget::rightButtonClick()
                 emit this->rightAnswered();
             }
             else if (this->curQuestion.isRight == false) {
-                qDebug() << this->curQuestion.rightAnswerIndex;
-//                qDebug() << this->curQuestion.rightAnswerIndex;
-
                 QMessageBox::information(this, "", tr("Правильный ответ: %1").arg(this->curQuestion.answers.at(this->curQuestion.rightAnswerIndex)));
                 emit this->notRightAnswered();
             }
