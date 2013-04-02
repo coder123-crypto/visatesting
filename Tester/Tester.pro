@@ -32,3 +32,8 @@ HEADERS  += MainWindow.h \
     QuestionDialog.h
 
 RESOURCES +=
+
+RC_FILE += tester.rc
+
+OTHER_FILES += \
+    tester.rc

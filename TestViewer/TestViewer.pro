@@ -20,3 +20,8 @@ SOURCES += main.cpp\
 HEADERS  += MainWindow.h \
     DelegateTestResult.h \
     DialogDatabaseParams.h
+
+OTHER_FILES += \
+    viewer.rc
+
+RC_FILE += viewer.rc

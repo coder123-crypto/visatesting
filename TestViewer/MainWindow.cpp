@@ -132,6 +132,7 @@ void MainWindow::showDbParams()
 
 void MainWindow::createGUI()
 {
+    this->setWindowTitle(tr("Просмотр результатов тестирования"));
     this->setCentralWidget(new QWidget(this));
     this->layout = new QHBoxLayout(this->centralWidget());
 
