@@ -1,4 +1,4 @@
-#include "QuestionWidget.h"
+#include "QuestionDialog.h"
 
 QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
 {
@@ -46,9 +46,11 @@ QuestionWidget::~QuestionWidget()
 
 void QuestionWidget::timerEvent(QTimerEvent *)
 {
-    this->editLeftTime->setText(secToStr(--this->currentTime));
-    if (this->currentTime == 0)
-        emit this->notRightAnswered();
+    if (this->questions->count() > 0) {
+        this->editLeftTime->setText(secToStr(--this->currentTime));
+        if (this->currentTime == 0)
+            emit this->notRightAnswered();
+    }
 }
 
 void QuestionWidget::goToNextQuestion()
@@ -97,72 +99,72 @@ void QuestionWidget::createGUI()
 
 void QuestionWidget::rightButtonClick()
 {
-    if (this->questions->count() == 0)
-        return;
+    if (this->questions->count() > 0) {
+        switch (this->curMode) {
+        case QuestionWidget::FreeTimeMode:
+            if (this->curQuestion.isRight == true)
+                emit this->rightAnswered();
+            else if (this->curQuestion.isRight == false) {
+                QMessageBox::information(this, "", tr("Правильный ответ: %1").arg(this->curQuestion.answers.at(this->curQuestion.rightAnswerIndex)));
+                emit this->notRightAnswered();
+            }
+            break;
 
-    switch (this->curMode) {
-    case QuestionWidget::FreeTimeMode:
-        if (this->curQuestion.isRight == true)
-            emit this->rightAnswered();
-        else if (this->curQuestion.isRight == false) {
-            QMessageBox::information(this, "", tr("Правильный ответ: %1").arg(this->curQuestion.answers.at(this->curQuestion.rightAnswerIndex)));
-            emit this->notRightAnswered();
+        case QuestionWidget::TestingMode:
+            if (this->curQuestion.isRight == true)
+                emit this->rightAnswered();
+            else if (this->curQuestion.isRight == false)
+                emit this->notRightAnswered();
+            break;
         }
-        break;
-
-    case QuestionWidget::TestingMode:
-        if (this->curQuestion.isRight == true)
-            emit this->rightAnswered();
-        else if (this->curQuestion.isRight == false)
-            emit this->notRightAnswered();
-        break;
     }
 }
 
 void QuestionWidget::notRightButtonClick()
 {
-    if (this->questions->count() == 0)
-        return;
-
-    switch (this->curMode) {
-    case QuestionWidget::FreeTimeMode:
-        if (this->curQuestion.isRight == true) {
-            QMessageBox::information(this, "", tr("Карта верна!"));
-            emit this->notRightAnswered();
-        }
-        else if (this->curQuestion.isRight == false)
-            emit this->rightAnswered();
-        break;
-
-    case QuestionWidget::TestingMode:
-        if (this->curQuestion.isRight == true)
-            emit this->notRightAnswered();
-        else if (this->curQuestion.isRight == false) {
-            DialogSelectAnswer d(this, this->curQuestion.answers);
-            if (d.exec() - 12 == this->curQuestion.rightAnswerIndex)
-                emit this->rightAnswered();
-            else
+    if (this->questions->count() > 0) {
+        switch (this->curMode) {
+        case QuestionWidget::FreeTimeMode:
+            if (this->curQuestion.isRight == true) {
+                QMessageBox::information(this, "", tr("Карта верна!"));
                 emit this->notRightAnswered();
+            }
+            else if (this->curQuestion.isRight == false)
+                emit this->rightAnswered();
+            break;
+
+        case QuestionWidget::TestingMode:
+            if (this->curQuestion.isRight == true)
+                emit this->notRightAnswered();
+            else if (this->curQuestion.isRight == false) {
+                DialogSelectAnswer d(this, this->curQuestion.answers);
+                if (d.exec() - 12 == this->curQuestion.rightAnswerIndex)
+                    emit this->rightAnswered();
+                else
+                    emit this->notRightAnswered();
+            }
+            break;
         }
-        break;
     }
 }
 
 void QuestionWidget::setNextQuestion()
 {
-    if (this->questions->nextQuestion(&this->curQuestion) == true) {
-        this->cardImage[0]->setImage(this->curQuestion.imageFront);
-        this->cardImage[1]->setImage(this->curQuestion.imageBack);
+    if (this->questions->count() > 0) {
+        if (this->questions->nextQuestion(&this->curQuestion) == true) {
+            this->cardImage[0]->setImage(this->curQuestion.imageFront);
+            this->cardImage[1]->setImage(this->curQuestion.imageBack);
 
-        if (this->curMode == QuestionWidget::TestingMode) {
-            // Если режим тестирования - запускаем таймер обратного отчета
-            this->currentTime = 3;
-            this->editLeftTime->setText(secToStr(this->currentTime));
-            this->timerId = this->startTimer(1000);
+            if (this->curMode == QuestionWidget::TestingMode) {
+                // Если режим тестирования - запускаем таймер обратного отчета
+                this->currentTime = 3;
+                this->editLeftTime->setText(secToStr(this->currentTime));
+                this->timerId = this->startTimer(1000);
+            }
         }
+        else
+            emit this->endedQuestions();
     }
-    else
-        emit this->endedQuestions();
 }
 
 // Правильный ответ
@@ -190,28 +192,30 @@ void QuestionWidget::endQuestions()
 
     if (this->curMode == TestingMode) {
         QSettings s("MIREA", "VisaTestViewer");
+        QSqlDatabase::removeDatabase("ytrewq");
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "ytrewq");
         db.setHostName(s.value("HostName").toString());
         db.setUserName(s.value("UserName").toString());
         db.setPort(s.value("Port").toInt());
         db.setPassword(s.value("Password").toString());
 
-        if (db.open() == false)
+        if (db.open() == true) {
+            QSqlQuery query(db);
+            if (query.exec("USE VISATESTING;") == false)
+                QMessageBox::critical(this, "", query.lastError().text());
+
+            query.prepare("INSERT INTO Students (GroupId, FirstName, LastName, Results, TestDate) VALUES (?, ?, ?, ?, ?);");
+            query.addBindValue(this->groupId);
+            query.addBindValue(this->name);
+            query.addBindValue(this->surname);
+            query.addBindValue(this->results);
+            query.addBindValue(QDateTime::currentDateTime());
+            if (query.exec() == false)
+                QMessageBox::critical(this, "", query.lastError().text());
+            db.close();
+        }
+        else
             QMessageBox::critical(this, "", db.lastError().text());
-
-        QSqlQuery query(db);
-        if (query.exec("USE VISATESTING;") == false)
-            QMessageBox::critical(this, "", query.lastError().text());
-
-        query.prepare("INSERT INTO Students (GroupId, FirstName, LastName, Results, TestDate) VALUES (?, ?, ?, ?, ?);");
-        query.addBindValue(this->groupId);
-        query.addBindValue(this->name);
-        query.addBindValue(this->surname);
-        query.addBindValue(this->results);
-        query.addBindValue(QDateTime::currentDateTime());
-        if (query.exec() == false)
-            QMessageBox::critical(this, "", query.lastError().text());
-        db.close();
     }
 
     DialogResults d(this, this->results);

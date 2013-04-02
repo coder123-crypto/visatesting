@@ -14,21 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    QuestionWidget.cpp \
     ImageLabel.cpp \
     Question.cpp \
     DialogAuthorization.cpp \
     DialogResults.cpp \
     DialogSelectAnswer.cpp \
-    DialogNote.cpp
+    DialogNote.cpp \
+    QuestionDialog.cpp
 
 HEADERS  += MainWindow.h \
-    QuestionWidget.h \
     ImageLabel.h \
     Question.h \
     DialogAuthorization.h \
     DialogResults.h \
     DialogSelectAnswer.h \
-    DialogNote.h
+    DialogNote.h \
+    QuestionDialog.h
 
 RESOURCES +=

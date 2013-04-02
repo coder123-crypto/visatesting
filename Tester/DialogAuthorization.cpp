@@ -3,6 +3,7 @@
 DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
 {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    QSqlDatabase::removeDatabase("qwerty");
     this->db = QSqlDatabase::addDatabase("QMYSQL", "qwerty");
     QSettings s("MIREA", "VisaTestViewer");
     this->db.setHostName(s.value("HostName").toString());

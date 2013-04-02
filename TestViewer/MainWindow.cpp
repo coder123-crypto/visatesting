@@ -163,7 +163,8 @@ void MainWindow::createGUI()
 
 void MainWindow::loadDataBase()
 {
-    this->db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase::removeDatabase("chupakabra");
+    this->db = QSqlDatabase::addDatabase("QMYSQL", "chupakabra");
     if (this->createDataBase() == false) {
         QMessageBox::critical(this, "", tr("Ошибка создания базы данных: \n%1").arg(this->lastError));
         return;
