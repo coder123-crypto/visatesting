@@ -2,10 +2,10 @@
 
 Questions::Questions(QString fileName)
 {
+    QSqlDatabase::removeDatabase("abracadabra");
     this->db = QSqlDatabase::addDatabase("QSQLITE", "abracadabra");
     this->db.setDatabaseName(fileName);
     this->db.open();
-
     QSqlQuery *query = new QSqlQuery(this->db);
     query->exec("CREATE TABLE 'questions' (num INTEGER, frontImage BLOB, backImage BLOB, answeres BLOB, rightAnswer INTEGER, isRight INTEGER, PRIMARY KEY (num));");
     this->_err = query->lastError().text();
