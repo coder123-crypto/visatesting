@@ -22,6 +22,7 @@ HEADERS  += MainWindow.h \
     DialogDatabaseParams.h
 
 OTHER_FILES += \
-    viewer.rc
+    viewer.rc \
+    viewer.ico
 
 RC_FILE += viewer.rc
