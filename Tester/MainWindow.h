@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QuestionWidget.h>
+#include <QuestionDialog.h>
 #include <DialogNote.h>
 
 class MainWindow : public QMainWindow
