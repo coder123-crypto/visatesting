@@ -2,16 +2,66 @@
 
 QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
 {
-    //        QImage img1("D:/Front.png");
-    //        QImage img2("D:/Back.png");
-    //        QStringList list;
-    //        list << tr("Неправильное положение логотипа VISA") << tr("Неправильный формат даты окончания использования") << tr("Неправильное положение магнитной полосы");
+    // BEGIN =====================================
+    //    this->questions = new Questions("/home/skandinavijos/VISAVISA.db");
+    //    QImage img1[5];
+    //    QImage img2[5];
+    //    QStringList list[5];
 
-    //        this->questions.saveNewQuestion(img1, img2, list, 0, 0);
+    //    img1[0].load("/home/skandinavijos/cards/1true/Front.png");
+    //    img1[1].load("/home/skandinavijos/cards/2true/Front.png");
+    //    img1[2].load("/home/skandinavijos/cards/3false/Front.png");
+    //    img1[3].load("/home/skandinavijos/cards/4false/Front.png");
+    //    img1[4].load("/home/skandinavijos/cards/5true/Front.png");
+
+    //    img2[0].load("/home/skandinavijos/cards/1true/Back.png");
+    //    img2[1].load("/home/skandinavijos/cards/2true/Back.png");
+    //    img2[2].load("/home/skandinavijos/cards/3false/Back.png");
+    //    img2[3].load("/home/skandinavijos/cards/4false/Back.png");
+    //    img2[4].load("/home/skandinavijos/cards/5true/Back.png");
+
+    //    list[0] << tr("Неправильный формат даты окончания использования") <<
+    //               tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильное положение магнитной полосы");
+
+    //    list[1] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильное положение магнитной полосы") <<
+    //               tr("Неправильный формат даты окончания использования");
+
+    //    list[2] << tr("Не совпадают цифры под номером карты") << // !
+    //               tr("Неправильный формат даты окончания использования") <<
+    //               tr("Неправильное положение логотипа VISA");
+
+    //    list[3] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильный формат даты окончания использования") << // !
+    //               tr("Не совпадают цифры кода безопасности на оборотной стороне");
+
+    //    list[4] << tr("Не совпадают цифры кода безопасности на оборотной стороне") <<
+    //               tr("Отсутствует логотип банка-эмитента") <<
+    //               tr("Неправильный формат даты окончания использования");
+    //    this->questions->saveNewQuestion(img1[0], img2[0], list[0], -1, 1);
+    //    this->questions->saveNewQuestion(img1[1], img2[1], list[1], -1, 1);
+    //    this->questions->saveNewQuestion(img1[2], img2[2], list[2], 0, 0);
+    //    this->questions->saveNewQuestion(img1[3], img2[3], list[3], 1, 0);
+    //    this->questions->saveNewQuestion(img1[4], img2[4], list[4], -1, 1);
+
+
+    //    //    QImage img1("/home/skandinavijos/Visa_Cards/1_true/Front.png");
+    //    //    QImage img2("/home/skandinavijos/Visa_Cards/1_true/Back.png");
+    //    //    QStringList list;
+    //    //    list << tr("Неправильное положение логотипа VISA") << tr("Неправильный формат даты окончания использования") << tr("Неправильное положение магнитной полосы");
+    //    //    this->questions.saveNewQuestion(img1, img2, list, 0, 0);
+
+
     //    return;
 
+    // END =======================================
 
+#ifdef Q_OS_LINUX
+    this->questions = new Questions("/home/skandinavijos/VISAVISA.db");
+#else
     this->questions = new Questions("D:/VISAVISA.db");
+#endif
 
     this->curMode = mode;
     this->createGUI();
@@ -34,6 +84,7 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
     }
 
     this->questions->loadQuestions();
+    qDebug("size = %d", this->questions->count());
     this->results.clear();
     this->beginOfTesting = QDateTime::currentDateTime();
     this->setNextQuestion();
@@ -96,25 +147,31 @@ void QuestionWidget::createGUI()
     this->layout->addWidget(this->line);
     this->layout->addLayout(this->layoutImages);
 }
-
+#include <QDebug>
 void QuestionWidget::rightButtonClick()
 {
     if (this->questions->count() > 0) {
         switch (this->curMode) {
         case QuestionWidget::FreeTimeMode:
-            if (this->curQuestion.isRight == true)
+            if (this->curQuestion.isRight == true) {
                 emit this->rightAnswered();
+            }
             else if (this->curQuestion.isRight == false) {
+                qDebug() << this->curQuestion.rightAnswerIndex;
+//                qDebug() << this->curQuestion.rightAnswerIndex;
+
                 QMessageBox::information(this, "", tr("Правильный ответ: %1").arg(this->curQuestion.answers.at(this->curQuestion.rightAnswerIndex)));
                 emit this->notRightAnswered();
             }
             break;
 
         case QuestionWidget::TestingMode:
-            if (this->curQuestion.isRight == true)
+            if (this->curQuestion.isRight == true) {
                 emit this->rightAnswered();
-            else if (this->curQuestion.isRight == false)
+            }
+            else if (this->curQuestion.isRight == false) {
                 emit this->notRightAnswered();
+            }
             break;
         }
     }
@@ -129,19 +186,23 @@ void QuestionWidget::notRightButtonClick()
                 QMessageBox::information(this, "", tr("Карта верна!"));
                 emit this->notRightAnswered();
             }
-            else if (this->curQuestion.isRight == false)
+            else if (this->curQuestion.isRight == false) {
                 emit this->rightAnswered();
+            }
             break;
 
         case QuestionWidget::TestingMode:
-            if (this->curQuestion.isRight == true)
+            if (this->curQuestion.isRight == true) {
                 emit this->notRightAnswered();
+            }
             else if (this->curQuestion.isRight == false) {
                 DialogSelectAnswer d(this, this->curQuestion.answers);
-                if (d.exec() - 12 == this->curQuestion.rightAnswerIndex)
+                if (d.exec() - 12 == this->curQuestion.rightAnswerIndex) {
                     emit this->rightAnswered();
-                else
+                }
+                else {
                     emit this->notRightAnswered();
+                }
             }
             break;
         }
