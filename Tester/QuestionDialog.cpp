@@ -84,7 +84,6 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
     }
 
     this->questions->loadQuestions();
-    qDebug("size = %d", this->questions->count());
     this->results.clear();
     this->beginOfTesting = QDateTime::currentDateTime();
     this->setNextQuestion();
