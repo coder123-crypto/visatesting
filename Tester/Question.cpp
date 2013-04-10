@@ -33,8 +33,9 @@ bool Questions::loadQuestions()
             newQuestion.imageFront = QImage::fromData(query->value(1).toByteArray());
             newQuestion.imageBack = QImage::fromData(query->value(2).toByteArray());
             newQuestion.answers = QString(query->value(3).toByteArray()).split("\r\n");
-            newQuestion.isRight = query->value(5).toInt() == 0 ? false : true;
             newQuestion.rightAnswerIndex = query->value(4).toUInt();
+            newQuestion.isRight = query->value(5).toBool();// == 0 ? false : true;
+
             this->questions.append(newQuestion);
         }
         this->mixQuestions();

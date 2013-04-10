@@ -10,6 +10,36 @@ DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
     this->db.setUserName(s.value("UserName").toString());
     this->db.setPort(s.value("Port").toInt());
     this->db.setPassword(s.value("Password").toString());
+    this->model = NULL;
+
+    this->layout = new QVBoxLayout(this);
+    this->groupBoxGroups = new QGroupBox(tr("Группа:"), this);
+    this->groupBoxGroups->setLayout(new QVBoxLayout(this->groupBoxGroups));
+    this->comboGroup = new QComboBox(this);
+    this->comboGroup->setModel(this->model);
+    this->comboGroup->setModelColumn(1);
+    this->groupBoxGroups->layout()->addWidget(this->comboGroup);
+
+    this->groupBoxName = new QGroupBox(tr("Имя:"), this);
+    this->groupBoxName->setLayout(new QVBoxLayout(this->groupBoxName));
+    this->lineEditName = new QLineEdit(this);
+    this->groupBoxName->layout()->addWidget(this->lineEditName);
+
+    this->groupBoxSurname = new QGroupBox(tr("Фамилия:"), this);
+    this->groupBoxSurname->setLayout(new QVBoxLayout(this->groupBoxSurname));
+    this->lineEditSurname = new QLineEdit(this);
+    this->groupBoxSurname->layout()->addWidget(this->lineEditSurname);
+
+    this->buttons = new QDialogButtonBox(this);
+    this->buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
+    this->layout->addWidget(this->groupBoxGroups);
+    this->layout->addWidget(this->groupBoxName);
+    this->layout->addWidget(this->groupBoxSurname);
+    this->layout->addWidget(this->buttons);
+
+    connect(this->buttons, SIGNAL(accepted()), this, SLOT(ok()));
+    connect(this->buttons, SIGNAL(rejected()), this, SLOT(cancel()));
 
     if (this->db.open() == true) {
         QSqlQuery query(this->db);
@@ -17,35 +47,6 @@ DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
         this->model = new QSqlTableModel(this, this->db);
         this->model->setTable("Groups");
         this->model->select();
-
-        this->layout = new QVBoxLayout(this);
-        this->groupBoxGroups = new QGroupBox(tr("Группа:"), this);
-        this->groupBoxGroups->setLayout(new QVBoxLayout(this->groupBoxGroups));
-        this->comboGroup = new QComboBox(this);
-        this->comboGroup->setModel(this->model);
-        this->comboGroup->setModelColumn(1);
-        this->groupBoxGroups->layout()->addWidget(this->comboGroup);
-
-        this->groupBoxName = new QGroupBox(tr("Имя:"), this);
-        this->groupBoxName->setLayout(new QVBoxLayout(this->groupBoxName));
-        this->lineEditName = new QLineEdit(this);
-        this->groupBoxName->layout()->addWidget(this->lineEditName);
-
-        this->groupBoxSurname = new QGroupBox(tr("Фамилия:"), this);
-        this->groupBoxSurname->setLayout(new QVBoxLayout(this->groupBoxSurname));
-        this->lineEditSurname = new QLineEdit(this);
-        this->groupBoxSurname->layout()->addWidget(this->lineEditSurname);
-
-        this->buttons = new QDialogButtonBox(this);
-        this->buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-        this->layout->addWidget(this->groupBoxGroups);
-        this->layout->addWidget(this->groupBoxName);
-        this->layout->addWidget(this->groupBoxSurname);
-        this->layout->addWidget(this->buttons);
-
-        connect(this->buttons, SIGNAL(accepted()), this, SLOT(ok()));
-        connect(this->buttons, SIGNAL(rejected()), this, SLOT(cancel()));
     }
     else
         QMessageBox::warning(this, tr("Ошибка"), this->db.lastError().text());

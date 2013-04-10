@@ -7,6 +7,7 @@ ImageLabel::ImageLabel(QWidget *parent) : QLabel(parent)
 void ImageLabel::setImage(const QImage &img)
 {
     this->_pixmap = QPixmap::fromImage(img);
+    this->repaint();
 }
 
 void ImageLabel::paintEvent(QPaintEvent *)

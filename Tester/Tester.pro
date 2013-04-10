@@ -37,4 +37,5 @@ RC_FILE += tester.rc
 
 OTHER_FILES += \
     tester.rc \
-    tester.ico
+    tester.ico \
+    questions
