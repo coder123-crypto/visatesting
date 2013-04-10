@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +31,8 @@ HEADERS  += MainWindow.h \
     DialogNote.h \
     QuestionDialog.h
 
-RESOURCES +=
+RESOURCES += \
+    res.qrc
 
 RC_FILE += tester.rc
 

@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QWebView>
+#include <QVBoxLayout>
 
 class DialogNote : public QDialog
 {
@@ -13,7 +15,9 @@ public:
 
 private slots:
     void showEvent(QShowEvent *);
-    
+
+private:
+    QWebView *webView;
 };
 
 #endif // DIALOGNOTE_H

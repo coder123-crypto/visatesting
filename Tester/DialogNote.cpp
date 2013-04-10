@@ -1,7 +1,12 @@
 #include "DialogNote.h"
 
-DialogNote::DialogNote(QWidget *parent) : QDialog(parent)
+DialogNote::DialogNote(QWidget *parent) : QDialog(parent),
+    webView(new QWebView(this))
 {
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::WindowMaximizeButtonHint);
+    this->setLayout(new QVBoxLayout);
+    this->layout()->addWidget(this->webView);
+    this->webView->setUrl(QUrl("qrc:/help.htm"));
 }
 
 void DialogNote::showEvent(QShowEvent *e)
