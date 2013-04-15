@@ -74,12 +74,13 @@ void DialogAuthorization::ok()
     m.setTable("Students");
     m.select();
 
-    QSqlQuery query(m.database());
-    query.exec(QString("SELECT * FROM Students WHERE FirstName = '%1' AND LastName = '%2' AND GroupId = %3;").arg(this->lineEditName->text()).arg(this->lineEditSurname->text()).arg(id));
-    if (query.next()) {
-        QMessageBox::warning(this, "", tr("Вы уже прошли тестирование"));
-        return;
-    }
+    // Раскомментировать, если нужно, чтобы студятел не мог пройти тестирование больше одного раза
+    //    QSqlQuery query(m.database());
+    //    query.exec(QString("SELECT * FROM Students WHERE FirstName = '%1' AND LastName = '%2' AND GroupId = %3;").arg(this->lineEditName->text()).arg(this->lineEditSurname->text()).arg(id));
+    //    if (query.next()) {
+    //        QMessageBox::warning(this, "", tr("Вы уже прошли тестирование"));
+    //        return;
+    //    }
 
     this->name = this->lineEditName->text();
     this->surname = this->lineEditSurname->text();
