@@ -2,6 +2,7 @@
 
 DialogDatabaseParams::DialogDatabaseParams(QWidget *parent) : QDialog(parent)
 {
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->layout = new QVBoxLayout(this);
     this->layout->addWidget((this->groupBoxHost = new QGroupBox(tr("Хост:"), this)));
     this->layout->addWidget((this->groupBoxPort = new QGroupBox(tr("Порт:"), this)));

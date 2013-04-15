@@ -69,12 +69,23 @@ void DialogAuthorization::showEvent(QShowEvent *e)
 
 void DialogAuthorization::ok()
 {
-    const int id = this->model->record(this->comboGroup->currentIndex()).value(0).toInt();
-    QSqlTableModel m(this, this->model->database());
-    m.setTable("Students");
-    m.select();
+    if (this->lineEditName->text().isEmpty()) {
+        QMessageBox::warning(this, "", tr("Не введено имя"));
+        return;
+    }
 
+    if (this->lineEditSurname->text().isEmpty()) {
+        QMessageBox::warning(this, "", tr("Не введена фамилия"));
+        return;
+    }
+
+    const int id = this->model->record(this->comboGroup->currentIndex()).value(0).toInt();
     // Раскомментировать, если нужно, чтобы студятел не мог пройти тестирование больше одного раза
+
+    //    QSqlTableModel m(this, this->model->database());
+    //    m.setTable("Students");
+    //    m.select();
+
     //    QSqlQuery query(m.database());
     //    query.exec(QString("SELECT * FROM Students WHERE FirstName = '%1' AND LastName = '%2' AND GroupId = %3;").arg(this->lineEditName->text()).arg(this->lineEditSurname->text()).arg(id));
     //    if (query.next()) {

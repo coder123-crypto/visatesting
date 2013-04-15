@@ -3,86 +3,86 @@
 QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
 {
     // BEGIN =====================================
-//    this->questions = new Questions("/home/skandinavijos/VISAVISA.db");
-//    QImage img1[10];
-//    QImage img2[10];
-//    QStringList list[10];
+    //    this->questions = new Questions("/home/skandinavijos/VISAVISA.db");
+    //    QImage img1[10];
+    //    QImage img2[10];
+    //    QStringList list[10];
 
-//    img1[0].load("/home/skandinavijos/cards/1true/Front.png");
-//    img1[1].load("/home/skandinavijos/cards/2true/Front.png");
-//    img1[2].load("/home/skandinavijos/cards/3false/Front.png");
-//    img1[3].load("/home/skandinavijos/cards/4false/Front.png");
-//    img1[4].load("/home/skandinavijos/cards/5true/Front.png");
-//    img1[5].load("/home/skandinavijos/cards/6false/Front.png");
-//    img1[6].load("/home/skandinavijos/cards/7false/Front.png");
-//    img1[7].load("/home/skandinavijos/cards/8false/Front.png");
-//    img1[8].load("/home/skandinavijos/cards/9true/Front.png");
-//    img1[9].load("/home/skandinavijos/cards/10false/Front.png");
+    //    img1[0].load("/home/skandinavijos/cards/1true/Front.png");
+    //    img1[1].load("/home/skandinavijos/cards/2true/Front.png");
+    //    img1[2].load("/home/skandinavijos/cards/3false/Front.png");
+    //    img1[3].load("/home/skandinavijos/cards/4false/Front.png");
+    //    img1[4].load("/home/skandinavijos/cards/5true/Front.png");
+    //    img1[5].load("/home/skandinavijos/cards/6false/Front.png");
+    //    img1[6].load("/home/skandinavijos/cards/7false/Front.png");
+    //    img1[7].load("/home/skandinavijos/cards/8false/Front.png");
+    //    img1[8].load("/home/skandinavijos/cards/9true/Front.png");
+    //    img1[9].load("/home/skandinavijos/cards/10false/Front.png");
 
-//    img2[0].load("/home/skandinavijos/cards/1true/Back.png");
-//    img2[1].load("/home/skandinavijos/cards/2true/Back.png");
-//    img2[2].load("/home/skandinavijos/cards/3false/Back.png");
-//    img2[3].load("/home/skandinavijos/cards/4false/Back.png");
-//    img2[4].load("/home/skandinavijos/cards/5true/Back.png");
-//    img2[5].load("/home/skandinavijos/cards/6false/Back.png");
-//    img2[6].load("/home/skandinavijos/cards/7false/Back.png");
-//    img2[7].load("/home/skandinavijos/cards/8false/Back.png");
-//    img2[8].load("/home/skandinavijos/cards/9true/Back.png");
-//    img2[9].load("/home/skandinavijos/cards/10false/Back.png");
+    //    img2[0].load("/home/skandinavijos/cards/1true/Back.png");
+    //    img2[1].load("/home/skandinavijos/cards/2true/Back.png");
+    //    img2[2].load("/home/skandinavijos/cards/3false/Back.png");
+    //    img2[3].load("/home/skandinavijos/cards/4false/Back.png");
+    //    img2[4].load("/home/skandinavijos/cards/5true/Back.png");
+    //    img2[5].load("/home/skandinavijos/cards/6false/Back.png");
+    //    img2[6].load("/home/skandinavijos/cards/7false/Back.png");
+    //    img2[7].load("/home/skandinavijos/cards/8false/Back.png");
+    //    img2[8].load("/home/skandinavijos/cards/9true/Back.png");
+    //    img2[9].load("/home/skandinavijos/cards/10false/Back.png");
 
-//    list[0] << tr("Неправильный формат даты окончания использования") <<
-//               tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильное положение магнитной полосы");
+    //    list[0] << tr("Неправильный формат даты окончания использования") <<
+    //               tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильное положение магнитной полосы");
 
-//    list[1] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильное положение магнитной полосы") <<
-//               tr("Неправильный формат даты окончания использования");
+    //    list[1] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильное положение магнитной полосы") <<
+    //               tr("Неправильный формат даты окончания использования");
 
-//    list[2] << tr("Неправильный формат БИН") << // !
-//               tr("Неправильный формат даты окончания использования") <<
-//               tr("Неправильное положение логотипа VISA");
+    //    list[2] << tr("Неправильный формат БИН") << // !
+    //               tr("Неправильный формат даты окончания использования") <<
+    //               tr("Неправильное положение логотипа VISA");
 
-//    list[3] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат даты окончания использования") << // !
-//               tr("Не совпадают цифры кода безопасности на оборотной стороне");
+    //    list[3] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильный формат даты окончания использования") << // !
+    //               tr("Не совпадают цифры кода безопасности на оборотной стороне");
 
-//    list[4] << tr("Не совпадают цифры кода безопасности на оборотной стороне") <<
-//               tr("Отсутствует логотип банка-эмитента") <<
-//               tr("Неправильный формат даты окончания использования");
+    //    list[4] << tr("Не совпадают цифры кода безопасности на оборотной стороне") <<
+    //               tr("Отсутствует логотип банка-эмитента") <<
+    //               tr("Неправильный формат даты окончания использования");
 
-//    list[5] << tr("Неправильный формат имени держателя") <<
-//               tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат кода безопасности"); // !
+    //    list[5] << tr("Неправильный формат имени держателя") <<
+    //               tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильный формат кода безопасности"); // !
 
-//    list[6] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный логотип VISA") <<   // !
-//               tr("Неправильный формат даты окончания использования");
+    //    list[6] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильный логотип VISA") <<   // !
+    //               tr("Неправильный формат даты окончания использования");
 
-//    list[7] << tr("Не совпадают цифры под номером карты") <<
-//               tr("Неправильный логотип VISA") <<
-//               tr("Неправильный формат имени держателя");   // !
+    //    list[7] << tr("Не совпадают цифры под номером карты") <<
+    //               tr("Неправильный логотип VISA") <<
+    //               tr("Неправильный формат имени держателя");   // !
 
-//    list[8] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат даты окончания использования") <<
-//               tr("Не совпадают цифры кода безопасности на оборотной стороне");
+    //    list[8] << tr("Неправильное положение логотипа VISA") <<
+    //               tr("Неправильный формат даты окончания использования") <<
+    //               tr("Не совпадают цифры кода безопасности на оборотной стороне");
 
-//    list[9] << tr("Неправильный формат номер карты") << // !
-//               tr("Отсутствует логотип банка-эмитента") <<
-//               tr("Неправильный формат даты окончания использования");
+    //    list[9] << tr("Неправильный формат номер карты") << // !
+    //               tr("Отсутствует логотип банка-эмитента") <<
+    //               tr("Неправильный формат даты окончания использования");
 
-//    this->questions->saveNewQuestion(img1[0], img2[0], list[0], -1, 1);
-//    this->questions->saveNewQuestion(img1[1], img2[1], list[1], -1, 1);
-//    this->questions->saveNewQuestion(img1[2], img2[2], list[2], 0, 0);
-//    this->questions->saveNewQuestion(img1[3], img2[3], list[3], 1, 0);
-//    this->questions->saveNewQuestion(img1[4], img2[4], list[4], -1, 1);
+    //    this->questions->saveNewQuestion(img1[0], img2[0], list[0], -1, 1);
+    //    this->questions->saveNewQuestion(img1[1], img2[1], list[1], -1, 1);
+    //    this->questions->saveNewQuestion(img1[2], img2[2], list[2], 0, 0);
+    //    this->questions->saveNewQuestion(img1[3], img2[3], list[3], 1, 0);
+    //    this->questions->saveNewQuestion(img1[4], img2[4], list[4], -1, 1);
 
-//    this->questions->saveNewQuestion(img1[5], img2[5], list[5], 2, 0);
-//    this->questions->saveNewQuestion(img1[6], img2[6], list[6], 1, 0);
-//    this->questions->saveNewQuestion(img1[7], img2[7], list[7], 2, 0);
-//    this->questions->saveNewQuestion(img1[8], img2[8], list[8], -1, 1);
-//    this->questions->saveNewQuestion(img1[9], img2[9], list[9], 0, 0);
+    //    this->questions->saveNewQuestion(img1[5], img2[5], list[5], 2, 0);
+    //    this->questions->saveNewQuestion(img1[6], img2[6], list[6], 1, 0);
+    //    this->questions->saveNewQuestion(img1[7], img2[7], list[7], 2, 0);
+    //    this->questions->saveNewQuestion(img1[8], img2[8], list[8], -1, 1);
+    //    this->questions->saveNewQuestion(img1[9], img2[9], list[9], 0, 0);
 
-//    return;
+    //    return;
 
     // END =======================================
 
@@ -103,23 +103,31 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
     connect(this, SIGNAL(notRightAnswered()), this, SLOT(notRightAnswer()));
     connect(this, SIGNAL(endedQuestions()), this, SLOT(endQuestions()));
 
+    bool ok = false;
     if (this->curMode == TestingMode) {
         DialogAuthorization d(this);
         if (d.exec() == 12) {
             this->name = d.name;
             this->surname = d.surname;
             this->groupId = d.groupId;
+            ok = true;
         }
     }
 
-    this->questions->loadQuestions();
-    if (this->questions->count() > 0) {
-        this->results.clear();
-        this->beginOfTesting = QDateTime::currentDateTime();
-        this->setNextQuestion();
+    if (ok == true) {
+        this->questions->loadQuestions();
+        if (this->questions->count() > 0) {
+            this->results.clear();
+            this->beginOfTesting = QDateTime::currentDateTime();
+            this->setNextQuestion();
+        }
+        else
+            QMessageBox::warning(this, "", tr("Вопросы не были загружены"));
     }
-    else
-        QMessageBox::warning(this, "", tr("Вопросы не были загружены"));
+    else {
+        this->buttonCorrect->setEnabled(false);
+        this->buttonNotCorrect->setEnabled(false);
+    }
 }
 
 QuestionWidget::~QuestionWidget()
