@@ -12,6 +12,16 @@ DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
     this->db.setPassword(s.value("Password").toString());
     this->model = NULL;
 
+    if (this->db.open() == true) {
+        QSqlQuery query(this->db);
+        query.exec("USE VISATESTING;");
+        this->model = new QSqlTableModel(this, this->db);
+        this->model->setTable("Groups");
+        this->model->select();
+    }
+    else
+        QMessageBox::warning(this, tr("Ошибка"), this->db.lastError().text());
+
     this->layout = new QVBoxLayout(this);
     this->groupBoxGroups = new QGroupBox(tr("Группа:"), this);
     this->groupBoxGroups->setLayout(new QVBoxLayout(this->groupBoxGroups));
@@ -40,16 +50,6 @@ DialogAuthorization::DialogAuthorization(QWidget *parent) : QDialog(parent)
 
     connect(this->buttons, SIGNAL(accepted()), this, SLOT(ok()));
     connect(this->buttons, SIGNAL(rejected()), this, SLOT(cancel()));
-
-    if (this->db.open() == true) {
-        QSqlQuery query(this->db);
-        query.exec("USE VISATESTING;");
-        this->model = new QSqlTableModel(this, this->db);
-        this->model->setTable("Groups");
-        this->model->select();
-    }
-    else
-        QMessageBox::warning(this, tr("Ошибка"), this->db.lastError().text());
 }
 
 DialogAuthorization::~DialogAuthorization()

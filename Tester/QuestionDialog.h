@@ -21,6 +21,7 @@
 #include <QByteArray>
 #include <DialogSelectAnswer.h>
 #include <QSettings>
+#include <QCloseEvent>
 
 // Перевод секунд в человеческое время
 static inline QString secToStr(const int sec)
@@ -52,6 +53,7 @@ private slots:
     void rightAnswer();
     void notRightAnswer();
     void endQuestions();
+    void closeEvent(QCloseEvent *);
 
 private:
 
@@ -78,6 +80,8 @@ private:
     int groupId;
     QString name;
     QString surname;
+
+    bool isTesting;
 
     inline void createGUI();
 

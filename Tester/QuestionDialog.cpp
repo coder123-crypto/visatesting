@@ -86,6 +86,8 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
 
     // END =======================================
 
+    this->isTesting = false;
+
 #ifdef Q_OS_LINUX
     this->questions = new Questions("/home/skandinavijos/VISAVISA.db");
 #else
@@ -177,7 +179,7 @@ void QuestionWidget::createGUI()
     this->layout->addWidget(this->line);
     this->layout->addLayout(this->layoutImages);
 }
-#include <QDebug>
+
 void QuestionWidget::rightButtonClick()
 {
     if (this->questions->count() > 0) {
@@ -224,7 +226,10 @@ void QuestionWidget::notRightButtonClick()
             }
             else if (this->curQuestion.isRight == false) {
                 DialogSelectAnswer d(this, this->curQuestion.answers);
-                if (d.exec() - 12 == this->curQuestion.rightAnswerIndex) {
+                this->killTimer(this->timerId);
+                int r = d.exec();
+                this->timerId = this->startTimer(1000);
+                if (r - 12 == this->curQuestion.rightAnswerIndex) {
                     emit this->rightAnswered();
                 }
                 else {
@@ -239,13 +244,14 @@ void QuestionWidget::notRightButtonClick()
 void QuestionWidget::setNextQuestion()
 {
     if (this->questions->count() > 0) {
+        this->isTesting = true;
         if (this->questions->nextQuestion(&this->curQuestion) == true) {
             this->cardImage[0]->setImage(this->curQuestion.imageFront);
             this->cardImage[1]->setImage(this->curQuestion.imageBack);
 
             if (this->curMode == QuestionWidget::TestingMode) {
                 // Если режим тестирования - запускаем таймер обратного отчета
-                this->currentTime = 3;
+                this->currentTime = 30;
                 this->editLeftTime->setText(secToStr(this->currentTime));
                 this->timerId = this->startTimer(1000);
             }
@@ -277,6 +283,7 @@ void QuestionWidget::endQuestions()
     this->endOfTesting = QDateTime::currentDateTime();
     this->buttonCorrect->setEnabled(false);
     this->buttonNotCorrect->setEnabled(false);
+    this->isTesting = false;
 
     if (this->curMode == TestingMode) {
         QSettings s("MIREA", "VisaTestViewer");
@@ -308,4 +315,13 @@ void QuestionWidget::endQuestions()
 
     DialogResults d(this, this->results);
     d.exec();
+}
+
+void QuestionWidget::closeEvent(QCloseEvent *e)
+{
+    if (this->isTesting == true) {
+        int r = QMessageBox::question(this, "", tr("Тестирование не закончено. Вы уверены, что хотите выйти?"), QMessageBox::Yes | QMessageBox::No);
+        if (r == QMessageBox::No)
+            e->ignore();
+    }
 }
