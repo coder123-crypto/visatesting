@@ -2,138 +2,199 @@
 
 QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
 {
+
     // BEGIN =====================================
-//    this->questions = new Questions("/home/leremin/VISAVISA.db");
-//    QImage img1[20];
-//    QImage img2[20];
-//    QStringList list[20];
+        this->questions = new Questions("/home/leremin/questions");
+        QImage img1[30];
+        QImage img2[30];
+        QStringList list[30];
 
-//    img1[0].load("/home/leremin/cards/11_true/Front.png");
-//    img1[1].load("/home/leremin/cards/12_false/Front.png");
-//    img1[2].load("/home/leremin/cards/13_true/Front.png");
-//    img1[3].load("/home/leremin/cards/14_true/Front.png");
-//    img1[4].load("/home/leremin/cards/15_false/Front.png");
-//    img1[5].load("/home/leremin/cards/16_false/Front.png");
-//    img1[6].load("/home/leremin/cards/17_true/Front.png");
-//    img1[7].load("/home/leremin/cards/18_false/Front.png");
-//    img1[8].load("/home/leremin/cards/19_true/Front.png");
-//    img1[9].load("/home/leremin/cards/20_false/Front.png");
-//    img1[10].load("/home/leremin/cards/21_true/Front.png");
-//    img1[11].load("/home/leremin/cards/22_false/Front.png");
-//    img1[12].load("/home/leremin/cards/23_true/Front.png");
-//    img1[13].load("/home/leremin/cards/24_false/Front.png");
-//    img1[14].load("/home/leremin/cards/25_true/Front.png");
-//    img1[15].load("/home/leremin/cards/26_false/Front.png");
-//    img1[16].load("/home/leremin/cards/27_true/Front.png");
-//    img1[17].load("/home/leremin/cards/28_false/Front.png");
-//    img1[18].load("/home/leremin/cards/29_false/Front.png");
-//    img1[19].load("/home/leremin/cards/30_true/Front.png");
+        img1[0].load("/home/leremin/cards/1true/Front.png");
+        img1[1].load("/home/leremin/cards/2true/Front.png");
+        img1[2].load("/home/leremin/cards/3false/Front.png");
+        img1[3].load("/home/leremin/cards/4false/Front.png");
+        img1[4].load("/home/leremin/cards/5true/Front.png");
+        img1[5].load("/home/leremin/cards/6false/Front.png");
+        img1[6].load("/home/leremin/cards/7false/Front.png");
+        img1[7].load("/home/leremin/cards/8false/Front.png");
+        img1[8].load("/home/leremin/cards/9true/Front.png");
+        img1[9].load("/home/leremin/cards/10false/Front.png");
+        img1[10].load("/home/leremin/cards/11_true/Front.png");
+        img1[11].load("/home/leremin/cards/12_false/Front.png");
+        img1[12].load("/home/leremin/cards/13_true/Front.png");
+        img1[13].load("/home/leremin/cards/14_true/Front.png");
+        img1[14].load("/home/leremin/cards/15_false/Front.png");
+        img1[15].load("/home/leremin/cards/16_false/Front.png");
+        img1[16].load("/home/leremin/cards/17_true/Front.png");
+        img1[17].load("/home/leremin/cards/18_false/Front.png");
+        img1[18].load("/home/leremin/cards/19_true/Front.png");
+        img1[19].load("/home/leremin/cards/20_false/Front.png");
+        img1[20].load("/home/leremin/cards/21_true/Front.png");
+        img1[21].load("/home/leremin/cards/22_false/Front.png");
+        img1[22].load("/home/leremin/cards/23_true/Front.png");
+        img1[23].load("/home/leremin/cards/24_false/Front.png");
+        img1[24].load("/home/leremin/cards/25_true/Front.png");
+        img1[25].load("/home/leremin/cards/26_false/Front.png");
+        img1[26].load("/home/leremin/cards/27_true/Front.png");
+        img1[27].load("/home/leremin/cards/28_false/Front.png");
+        img1[28].load("/home/leremin/cards/29_false/Front.png");
+        img1[29].load("/home/leremin/cards/30_true/Front.png");
 
-//    img2[0].load("/home/leremin/cards/11_true/Back.png");
-//    img2[1].load("/home/leremin/cards/12_false/Back.png");
-//    img2[2].load("/home/leremin/cards/13_true/Back.png");
-//    img2[3].load("/home/leremin/cards/14_true/Back.png");
-//    img2[4].load("/home/leremin/cards/15_false/Back.png");
-//    img2[5].load("/home/leremin/cards/16_false/Back.png");
-//    img2[6].load("/home/leremin/cards/17_true/Back.png");
-//    img2[7].load("/home/leremin/cards/18_false/Back.png");
-//    img2[8].load("/home/leremin/cards/19_true/Back.png");
-//    img2[9].load("/home/leremin/cards/20_false/Back.png");
-//    img2[10].load("/home/leremin/cards/21_true/Back.png");
-//    img2[11].load("/home/leremin/cards/22_false/Back.png");
-//    img2[12].load("/home/leremin/cards/23_true/Back.png");
-//    img2[13].load("/home/leremin/cards/24_false/Back.png");
-//    img2[14].load("/home/leremin/cards/25_true/Back.png");
-//    img2[15].load("/home/leremin/cards/26_false/Back.png");
-//    img2[16].load("/home/leremin/cards/27_true/Back.png");
-//    img2[17].load("/home/leremin/cards/28_false/Back.png");
-//    img2[18].load("/home/leremin/cards/29_false/Back.png");
-//    img2[19].load("/home/leremin/cards/30_true/Back.png");
+        img2[0].load("/home/leremin/cards/1true/Back.png");
+        img2[1].load("/home/leremin/cards/2true/Back.png");
+        img2[2].load("/home/leremin/cards/3false/Back.png");
+        img2[3].load("/home/leremin/cards/4false/Back.png");
+        img2[4].load("/home/leremin/cards/5true/Back.png");
+        img2[5].load("/home/leremin/cards/6false/Back.png");
+        img2[6].load("/home/leremin/cards/7false/Back.png");
+        img2[7].load("/home/leremin/cards/8false/Back.png");
+        img2[8].load("/home/leremin/cards/9true/Back.png");
+        img2[9].load("/home/leremin/cards/10false/Back.png");
+        img2[10].load("/home/leremin/cards/11_true/Back.png");
+        img2[11].load("/home/leremin/cards/12_false/Back.png");
+        img2[12].load("/home/leremin/cards/13_true/Back.png");
+        img2[13].load("/home/leremin/cards/14_true/Back.png");
+        img2[14].load("/home/leremin/cards/15_false/Back.png");
+        img2[15].load("/home/leremin/cards/16_false/Back.png");
+        img2[16].load("/home/leremin/cards/17_true/Back.png");
+        img2[17].load("/home/leremin/cards/18_false/Back.png");
+        img2[18].load("/home/leremin/cards/19_true/Back.png");
+        img2[19].load("/home/leremin/cards/20_false/Back.png");
+        img2[20].load("/home/leremin/cards/21_true/Back.png");
+        img2[21].load("/home/leremin/cards/22_false/Back.png");
+        img2[22].load("/home/leremin/cards/23_true/Back.png");
+        img2[23].load("/home/leremin/cards/24_false/Back.png");
+        img2[24].load("/home/leremin/cards/25_true/Back.png");
+        img2[25].load("/home/leremin/cards/26_false/Back.png");
+        img2[26].load("/home/leremin/cards/27_true/Back.png");
+        img2[27].load("/home/leremin/cards/28_false/Back.png");
+        img2[28].load("/home/leremin/cards/29_false/Back.png");
+        img2[29].load("/home/leremin/cards/30_true/Back.png");
 
-//    list[0] << tr("Неправильный формат имени держателя") <<
-//               tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильное положение магнитной полосы");
-//    list[1] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат имени держателя") <<
-//               tr("Неправильный формат даты окончания использования");
-//    list[2] << tr("Неправильный формат БИН") << // !
-//               tr("Неправильный формат даты окончания использования") <<
-//               tr("Неправильное положение логотипа VISA");
-//    list[3] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат номера карты") << // !
-//               tr("Неправильное положение голограммы");
-//    list[4] << tr("Неправаильная голограмма") <<
-//               tr("Отсутствует логотип банка-эмитента") <<
-//               tr("Неправильный формат даты окончания использования");
-//    list[5] << tr("Неправильный формат имени держателя") <<
-//               tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат БИН"); // !
-//    list[6] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат номера карты") <<   // !
-//               tr("Неправильный формат карты");
-//    list[7] << tr("Не совпадают цифры под номером карты") <<
-//               tr("Отсутствует номер карты на обороте") <<
-//               tr("Неправильный формат имени держателя");   // !
-//    list[8] << tr("Неправильное положение логотипа VISA") <<
-//               tr("Неправильный формат даты окончания использования") <<
-//               tr("Неправильный формат CVV");
-//    list[9] << tr("Неправильный формат номер карты") << // !
-//               tr("Отсутствует логотип банка-эмитента") <<
-//               tr("Неправильный формат имени держателя");
-//    list[10] << tr("Неправильный формат имени держателя") <<
-//                tr("Неправильное положение логотипа VISA") <<
-//                tr("Неправильное положение магнитной полосы");
-//    list[11] << tr("Неправильный формат имени держателя") <<
-//                tr("Неправильное положение магнитной полосы") <<
-//                tr("Неправильное положение полосы для подписи");
-//    list[12] << tr("Неправильный формат имени держателя") <<
-//                tr("Неправильное положение магнитной полосы") <<
-//                tr("Неправильное положение полосы для подписи");
-//    list[13] << tr("Неправильный формат имени держателя") <<
-//                tr("Неправильное положение магнитной полосы") <<
-//                tr("Неправильное положение голограммы");
-//    list[14] << tr("Неправильный формат срока действия") <<
-//                tr("Неправильный формат карты") <<
-//                tr("Неправильное положение полосы для подписи");
-//    list[15] << tr("Неправильный формат срока действия") <<
-//                tr("Неправильный формат карты") <<
-//                tr("Неправильное положение полосы для подписи");
-//    list[16] << tr("Неправильное положение логотипа VISA") <<
-//                tr("Неправильный формат даты окончания использования") <<
-//                tr("Неправильный формат CVV");
-//    list[17] << tr("Неправильное положение логотипа VISA") <<
-//                tr("Неправильный формат номера карты") <<   // !
-//                tr("Неправильный формат карты");
-//    list[18] << tr("Неправильный формат номера карты") <<
-//                tr("Неправильный формат имени держателя") <<   // !
-//                tr("Неправильное положение логотипа VISA");
-//    list[19] << tr("Не совпадают цифры под номером карты") <<
-//                tr("Отсутствует номер карты на обороте") <<
-//                tr("Неправильный формат имени держателя");   // !
+        list[0] << tr("Неправильный формат даты окончания использования") <<
+                   tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильное положение магнитной полосы");
+        list[1] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильное положение магнитной полосы") <<
+                   tr("Неправильный формат даты окончания использования");
+        list[2] << tr("Неправильный формат БИН") << // !
+                   tr("Неправильный формат даты окончания использования") <<
+                   tr("Неправильное положение логотипа VISA");
+        list[3] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат даты окончания использования") << // !
+                   tr("Не совпадают цифры кода безопасности на оборотной стороне");
+        list[4] << tr("Не совпадают цифры кода безопасности на оборотной стороне") <<
+                   tr("Отсутствует логотип банка-эмитента") <<
+                   tr("Неправильный формат даты окончания использования");
+        list[5] << tr("Неправильный формат имени держателя") <<
+                   tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат кода безопасности"); // !
+        list[6] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный логотип VISA") <<   // !
+                   tr("Неправильный формат даты окончания использования");
+        list[7] << tr("Не совпадают цифры под номером карты") <<
+                   tr("Неправильный логотип VISA") <<
+                   tr("Неправильный формат имени держателя");   // !
+        list[8] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат даты окончания использования") <<
+                   tr("Не совпадают цифры кода безопасности на оборотной стороне");
+        list[9] << tr("Неправильный формат номер карты") << // !
+                   tr("Отсутствует логотип банка-эмитента") <<
+                   tr("Неправильный формат даты окончания использования");
+        list[10] << tr("Неправильный формат имени держателя") <<
+                   tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильное положение магнитной полосы");
+        list[11] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат имени держателя") <<
+                   tr("Неправильный формат даты окончания использования");
+        list[12] << tr("Неправильный формат БИН") << // !
+                   tr("Неправильный формат даты окончания использования") <<
+                   tr("Неправильное положение логотипа VISA");
+        list[13] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат номера карты") << // !
+                   tr("Неправильное положение голограммы");
+        list[14] << tr("Неправаильная голограмма") <<
+                   tr("Отсутствует логотип банка-эмитента") <<
+                   tr("Неправильный формат даты окончания использования");
+        list[15] << tr("Неправильный формат имени держателя") <<
+                   tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат БИН"); // !
+        list[16] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат номера карты") <<   // !
+                   tr("Неправильный формат карты");
+        list[17] << tr("Не совпадают цифры под номером карты") <<
+                   tr("Отсутствует номер карты на обороте") <<
+                   tr("Неправильный формат имени держателя");   // !
+        list[18] << tr("Неправильное положение логотипа VISA") <<
+                   tr("Неправильный формат даты окончания использования") <<
+                   tr("Неправильный формат CVV");
+        list[19] << tr("Неправильный формат номер карты") << // !
+                   tr("Отсутствует логотип банка-эмитента") <<
+                   tr("Неправильный формат имени держателя");
+        list[20] << tr("Неправильный формат имени держателя") <<
+                    tr("Неправильное положение логотипа VISA") <<
+                    tr("Неправильное положение магнитной полосы");
+        list[21] << tr("Неправильный формат имени держателя") <<
+                    tr("Неправильное положение магнитной полосы") <<
+                    tr("Неправильное положение полосы для подписи");
+        list[22] << tr("Неправильный формат имени держателя") <<
+                    tr("Неправильное положение магнитной полосы") <<
+                    tr("Неправильное положение полосы для подписи");
+        list[23] << tr("Неправильный формат имени держателя") <<
+                    tr("Неправильное положение магнитной полосы") <<
+                    tr("Неправильное положение голограммы");
+        list[24] << tr("Неправильный формат срока действия") <<
+                    tr("Неправильный формат карты") <<
+                    tr("Неправильное положение полосы для подписи");
+        list[25] << tr("Неправильный формат срока действия") <<
+                    tr("Неправильный формат карты") <<
+                    tr("Неправильное положение полосы для подписи");
+        list[26] << tr("Неправильное положение логотипа VISA") <<
+                    tr("Неправильный формат даты окончания использования") <<
+                    tr("Неправильный формат CVV");
+        list[27] << tr("Неправильное положение логотипа VISA") <<
+                    tr("Неправильный формат номера карты") <<   // !
+                    tr("Неправильный формат карты");
+        list[28] << tr("Неправильный формат номера карты") <<
+                    tr("Неправильный формат имени держателя") <<   // !
+                    tr("Неправильное положение логотипа VISA");
+        list[29] << tr("Не совпадают цифры под номером карты") <<
+                    tr("Отсутствует номер карты на обороте") <<
+                    tr("Неправильный формат имени держателя");   // !
 
-//    this->questions->saveNewQuestion(img1[0], img2[0], list[0], -1, 1);
-//    this->questions->saveNewQuestion(img1[1], img2[1], list[1], 1, 0);
-//    this->questions->saveNewQuestion(img1[2], img2[2], list[2], -1, 1);
-//    this->questions->saveNewQuestion(img1[3], img2[3], list[3], -1, 1);
-//    this->questions->saveNewQuestion(img1[4], img2[4], list[4], 0, 0);
-//    this->questions->saveNewQuestion(img1[5], img2[5], list[5], 2, 0);
-//    this->questions->saveNewQuestion(img1[6], img2[6], list[6], -1, 1);
-//    this->questions->saveNewQuestion(img1[7], img2[7], list[7], 1, 0);
-//    this->questions->saveNewQuestion(img1[8], img2[8], list[8], -1, 1);
-//    this->questions->saveNewQuestion(img1[9], img2[9], list[9], 2, 0);
-//    this->questions->saveNewQuestion(img1[10], img2[10], list[10], -1, 1);
-//    this->questions->saveNewQuestion(img1[11], img2[11], list[11], 1, 0);
-//    this->questions->saveNewQuestion(img1[12], img2[12], list[12], -1, 1);
-//    this->questions->saveNewQuestion(img1[13], img2[13], list[13], 2, 0);
-//    this->questions->saveNewQuestion(img1[14], img2[14], list[14], -1, 1);
-//    this->questions->saveNewQuestion(img1[15], img2[15], list[15], 0, 0);
-//    this->questions->saveNewQuestion(img1[16], img2[16], list[16], -1, 1);
-//    this->questions->saveNewQuestion(img1[17], img2[17], list[17], 2, 0);
-//    this->questions->saveNewQuestion(img1[18], img2[18], list[18], 0, 0);
-//    this->questions->saveNewQuestion(img1[19], img2[19], list[19], -1, 1);
+        this->questions->saveNewQuestion(img1[0], img2[0], list[0], -1, 1);
+        this->questions->saveNewQuestion(img1[1], img2[1], list[1], -1, 1);
+        this->questions->saveNewQuestion(img1[2], img2[2], list[2], 0, 0);
+        this->questions->saveNewQuestion(img1[3], img2[3], list[3], 1, 0);
+        this->questions->saveNewQuestion(img1[4], img2[4], list[4], -1, 1);
+        this->questions->saveNewQuestion(img1[5], img2[5], list[5], 2, 0);
+        this->questions->saveNewQuestion(img1[6], img2[6], list[6], 1, 0);
+        this->questions->saveNewQuestion(img1[7], img2[7], list[7], 2, 0);
+        this->questions->saveNewQuestion(img1[8], img2[8], list[8], -1, 1);
+        this->questions->saveNewQuestion(img1[9], img2[9], list[9], 0, 0);
+        this->questions->saveNewQuestion(img1[10], img2[10], list[10], -1, 1);
+        this->questions->saveNewQuestion(img1[11], img2[11], list[11], 1, 0);
+        this->questions->saveNewQuestion(img1[12], img2[12], list[12], -1, 1);
+        this->questions->saveNewQuestion(img1[13], img2[13], list[13], -1, 1);
+        this->questions->saveNewQuestion(img1[14], img2[14], list[14], 0, 0);
+        this->questions->saveNewQuestion(img1[15], img2[15], list[15], 2, 0);
+        this->questions->saveNewQuestion(img1[16], img2[16], list[16], -1, 1);
+        this->questions->saveNewQuestion(img1[17], img2[17], list[17], 1, 0);
+        this->questions->saveNewQuestion(img1[18], img2[18], list[18], -1, 1);
+        this->questions->saveNewQuestion(img1[19], img2[19], list[19], 2, 0);
+        this->questions->saveNewQuestion(img1[20], img2[20], list[20], -1, 1);
+        this->questions->saveNewQuestion(img1[21], img2[21], list[21], 1, 0);
+        this->questions->saveNewQuestion(img1[22], img2[22], list[22], -1, 1);
+        this->questions->saveNewQuestion(img1[23], img2[23], list[23], 2, 0);
+        this->questions->saveNewQuestion(img1[24], img2[24], list[24], -1, 1);
+        this->questions->saveNewQuestion(img1[25], img2[25], list[25], 0, 0);
+        this->questions->saveNewQuestion(img1[26], img2[26], list[26], -1, 1);
+        this->questions->saveNewQuestion(img1[27], img2[27], list[27], 2, 0);
+        this->questions->saveNewQuestion(img1[28], img2[28], list[28], 0, 0);
+        this->questions->saveNewQuestion(img1[29], img2[29], list[29], -1, 1);
 
-//    delete this->questions;
-//    return;
+        delete this->questions;
+        return;
 
     // END =======================================
 
@@ -164,6 +225,8 @@ QuestionWidget::QuestionWidget(QWidget *parent, WorkMode mode) : QDialog(parent)
             ok = true;
         }
     }
+    else
+        ok = true;
 
     if (ok == true) {
         this->questions->loadQuestions();
