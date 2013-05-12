@@ -12,6 +12,7 @@
 #include <QVariant>
 #include <QBuffer>
 #include <QTime>
+#include <QSettings>
 
 struct QuestionPrivate
 {

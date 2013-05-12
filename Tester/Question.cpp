@@ -24,11 +24,16 @@ bool Questions::loadQuestions()
 {
     if (this->db.isOpen() == false)
         return false;
+
+    QSettings s("MIREA", "VisaTestViewer");
+    int maxQuestions = s.value("maxQuestions", -1).toInt();
+
     QSqlQuery *query = new QSqlQuery(this->db);
     bool ok = query->exec("SELECT num, frontImage, backImage, answeres, rightAnswer, isRight FROM 'questions'");
     if (ok == true) {
         this->questions.clear();
-        while (query->next()) {
+        int cnt = 0;
+        while (query->next() && cnt != maxQuestions) {
             QuestionPrivate newQuestion;
             newQuestion.imageFront = QImage::fromData(query->value(1).toByteArray());
             newQuestion.imageBack = QImage::fromData(query->value(2).toByteArray());
@@ -37,6 +42,7 @@ bool Questions::loadQuestions()
             newQuestion.isRight = query->value(5).toBool();// == 0 ? false : true;
 
             this->questions.append(newQuestion);
+            cnt++;
         }
         this->mixQuestions();
         this->currentIndex = 0;
